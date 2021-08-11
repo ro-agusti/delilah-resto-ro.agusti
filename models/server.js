@@ -28,9 +28,9 @@ class Server {
             console.log('Base de datos conectada')
         }).catch(err => {
             console.error('Error en la concexion a la base de batos', err)
-        }).finally(() => {
+        })/* .finally(() => {
             sequelize.close()
-        })
+        }) */
     }
         /* coneccion a la base de datos(){
         base de datos.connect(err => {
