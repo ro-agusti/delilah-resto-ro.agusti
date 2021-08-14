@@ -32,15 +32,6 @@ class Server {
             sequelize.close()
         }) */
     }
-        /* coneccion a la base de datos(){
-        base de datos.connect(err => {
-            if(err){
-                console.log(err);
-            }else{
-                console.log('conexion exitosa a la base de datos')
-            }
-        })
-    } */
     listen(){
         this.app.listen(this.port, ()=> {
             console.log(`servidor web en: http://localhost:${this.port}`)
