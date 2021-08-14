@@ -1,71 +1,192 @@
 const sequelize = require('../database/connection.database.js');
 const insertUserSQL = async (objectBody) => {
-    const retorno = await sequelize.query('INSERT INTO `users` (`username`, `name & surname`, `email`, `telephone`, `address`, `password`) VALUES (:username, :nameSurname, :email, :telephone, :address, :password)',
-        { replacements: objectBody, type: sequelize.QueryTypes.INSERT })
-    return retorno;
+    try {     
+        const retorno = await sequelize.query('INSERT INTO `users` (`username`, `name & surname`, `email`, `telephone`, `address`, `password`) VALUES (:username, :nameSurname, :email, :telephone, :address, :password)',
+            { replacements: objectBody, type: sequelize.QueryTypes.INSERT })
+        return retorno;
+    } catch (error) {
+        res.status(500).send(error);
+    }
 };
 
 const existinUsernameSQL = async (bodyUsername) => {
-    const retorno = await sequelize.query('SELECT * FROM `users` WHERE `username` = :username',
-        { replacements: bodyUsername, type: sequelize.QueryTypes.SELECT })
-    return retorno;
+    try {   
+        const retorno = await sequelize.query('SELECT * FROM `users` WHERE `username` = :username',
+            { replacements: bodyUsername, type: sequelize.QueryTypes.SELECT })
+        return retorno;
+    } catch (error) {
+        res.status(500).send(error);
+    }
 };
 
 const verifyDataSQL = async (usernameBody, emailBody, passwordBody) => {
-    const retorno = await sequelize.query('SELECT * FROM `users` WHERE `username` = ? AND `email` = ? AND `password`= ?',
-        { replacements: [usernameBody, emailBody, passwordBody], type: sequelize.QueryTypes.SELECT })
-    return retorno;
-}
+    try {  
+        const retorno = await sequelize.query('SELECT * FROM `users` WHERE `username` = ? AND `email` = ? AND `password`= ?',
+            { replacements: [usernameBody, emailBody, passwordBody], type: sequelize.QueryTypes.SELECT })
+        return retorno;
+    } catch (error) {
+        res.status(500).send(error);
+    }
+};
 
 const modifyUserDataSQL = async (nameSurnameBody, emailBody, telephoneBody, adressBody, passwordBody, idParams) => {
-    const retorno = await sequelize.query('UPDATE `users` SET `name & surname` = ? , `email` = ? , `telephone` = ? , `address` = ? , `password` = ?  WHERE `ID_user` = ?',
-        { replacements: [nameSurnameBody, emailBody, telephoneBody, adressBody, passwordBody, idParams], type: sequelize.QueryTypes.UPDATE })
-    return retorno;
+    try {
+        const retorno = await sequelize.query('UPDATE `users` SET `name & surname` = ? , `email` = ? , `telephone` = ? , `address` = ? , `password` = ?  WHERE `ID_user` = ?',
+            { replacements: [nameSurnameBody, emailBody, telephoneBody, adressBody, passwordBody, idParams], type: sequelize.QueryTypes.UPDATE })
+        return retorno;
+    } catch (error) {
+        res.status(500).send(error);
+    }
 };
 
 const verifyRoleDataSQL = async (idParams) => {
-    const retorno = await sequelize.query('SELECT role FROM users WHERE ID_user = ? ',
-        { replacements: [idParams], type: sequelize.QueryTypes.SELECT })
-    return retorno;
+    try {
+        const retorno = await sequelize.query('SELECT role FROM users WHERE ID_user = ? ',
+            { replacements: [idParams], type: sequelize.QueryTypes.SELECT })
+        return retorno;
+    } catch (error) {
+        res.status(500).send(error);
+    }
 };
 
 const getUserDataSql = async (idParams) => {
-    const retorno = await sequelize.query('SELECT `username`,`name & surname`, `email`, `telephone`, `address`  FROM users WHERE ID_user = ?',
-        { replacements: [idParams], type: sequelize.QueryTypes.INSERT })
-    return retorno;
+    try {
+        const retorno = await sequelize.query('SELECT `username`,`name & surname`, `email`, `telephone`, `address`  FROM users WHERE ID_user = ?',
+            { replacements: [idParams], type: sequelize.QueryTypes.INSERT })
+        return retorno;
+    } catch (error) {
+        res.status(500).send(error);
+    }
 };
 
 const selectProductsDataSql = async () => {
-    const retorno = await sequelize.query('SELECT * FROM products',
-        { type: sequelize.QueryTypes.SELECT })
-    return retorno;
-};
-
-const selectOrdersDataSql = async () => {
-    const retorno = await sequelize.query('SELECT `ID_orders`, `estate`, `time`, `payment_type`, `user_ID` FROM orders, users WHERE orders.user_ID = users.ID_user',
-        { type: sequelize.QueryTypes.SELECT })
-    return retorno;
+    try {
+        const retorno = await sequelize.query('SELECT * FROM products',
+            { type: sequelize.QueryTypes.SELECT })
+        return retorno;
+    } catch (error) {
+        res.status(500).send(error);
+    }
 };
 
 const selectOrderDataSql = async (idParams) => {
-    const retorno = await sequelize.query('SELECT * FROM `order`, `products`, `orders` WHERE order.orders_ID = orders.ID_orders AND orders.ID_orders=? ',
-        { replacements: [idParams], type: sequelize.QueryTypes.SELECT })
-    return retorno;
-}
+    try {
+        const retorno = await sequelize.query('SELECT * FROM `order`, `products`, `orders` WHERE order.orders_ID = orders.ID_orders AND orders.ID_orders=? ',
+            { replacements: [idParams], type: sequelize.QueryTypes.SELECT })
+        return retorno;
+    } catch (error) {
+        res.status(500).send(error);
+    }
+};
 
 const insertOrdersDataSql = async (paymentType, order, IDuser) => {
-    const objectID = await sequelize.query('INSERT INTO `orders` SET payment_type = ? , user_ID = ?',
-        { replacements: [paymentType, IDuser], type: sequelize.QueryTypes.INSERT })
-    const orderID = objectID[0];
-    for (let index = 0; index < order.length; index++) {
-        await sequelize.query('INSERT INTO `order` SET orders_ID = ?, product_ID = ? , amount = ? ',
-            { replacements: [orderID, order[index].product_ID, order[index].amount], type: sequelize.QueryTypes.INSERT})
+    try { 
+        const objectID = await sequelize.query('INSERT INTO `orders` SET payment_type = ? , user_ID = ?',
+            { replacements: [paymentType, IDuser], type: sequelize.QueryTypes.INSERT })
+        const orderID = objectID[0];
+        for (let index = 0; index < order.length; index++) {
+            await sequelize.query('INSERT INTO `order` SET orders_ID = ?, product_ID = ? , amount = ? ',
+                { replacements: [orderID, order[index].product_ID, order[index].amount], type: sequelize.QueryTypes.INSERT })
+        }
+        const detailOrder = {
+            orderID,
+            ...order
+        }
+        return detailOrder;
+    } catch (error) {
+        res.status(500).send(error);
     }
-    const detailOrder = {
-        orderID,
-        ...order
+};
+
+const selectOrdersAdminDataSql = async () => {
+    try {      
+        const orders = await sequelize.query('SELECT * FROM orders',
+            { type: sequelize.QueryTypes.SELECT });
+        return orders;
+    } catch (error) {
+        res.status(500).send(error);
     }
-    return detailOrder;
+};
+
+const selectOrderAdminDataSql = async () => {
+    try {
+        const retorno = await sequelize.query('SELECT * FROM `order`',
+            { type: sequelize.QueryTypes.SELECT });
+        console.log(retorno)
+        return retorno;
+    } catch (error) {
+        res.status(500).send(error);
+    }
+};
+
+const updateOrdersAdminSql = async (stateBody, idOrdersBody) => {
+    try {
+        const retorno = await sequelize.query('UPDATE `orders` SET `state` = ? WHERE `ID_orders`= ?',
+            { replacements: [stateBody, idOrdersBody], type: sequelize.QueryTypes.UPDATE });
+        return retorno;
+    } catch (error) {
+        res.status(500).send(error);
+    }
+};
+
+const existinOrdersSQL = async (idOrdersBody) => {
+    try {
+        const retorno = await sequelize.query('SELECT * FROM `orders` WHERE `ID_orders` = ?',
+            { replacements: [idOrdersBody], type: sequelize.QueryTypes.SELECT });
+        return retorno;
+    } catch (error) {
+        res.status(500).send(error);
+    }
+}
+
+const insertProductDataSql = async (nameBody, priceBody, imageBody) => {
+    try {
+        const retorno = await sequelize.query('INSERT INTO `products` SET product_name = ? , price = ?, image = ?',
+            { replacements: [nameBody, priceBody, imageBody], type: sequelize.QueryTypes.INSERT })
+        return retorno;
+    } catch (error) {
+        res.status(500).send(error);
+    }
+};
+
+const updateProductsDataSql = async (nameBody, priceBody, imageBody, idProductBody) => {
+    try {
+        const retorno = await sequelize.query('UPDATE `products` SET `product_name` = ?, `price`= ?, `image` =? WHERE `ID_product`= ?',
+            { replacements: [nameBody, priceBody, imageBody, idProductBody], type: sequelize.QueryTypes.UPDATE });
+        return retorno;
+    } catch (error) {
+        res.status(500).send(error);
+    }
+};
+
+const existingProductDataSql = async (idProductBody) => {
+    try {
+        const retorno = await sequelize.query('SELECT * FROM `products` WHERE `ID_product` = ?',
+            { replacements: [idProductBody], type: sequelize.QueryTypes.SELECT });
+        return retorno;
+    } catch (error) {
+        res.status(500).send(error);
+    }
+};
+
+const deleteProductDataSql = async(idProductParams) =>{
+    try {     
+        const retorno = await sequelize.query('DELETE FROM `products` WHERE `ID_product` = ?',
+        {replacements:[idProductParams], type:sequelize.QueryTypes.DELETE});
+        return retorno;
+    } catch (error) {
+        res.status(500).send(error);
+    }
+}
+
+const selectUsersDataSql = async () => {
+    try {
+        const retorno = await sequelize.query('SELECT * FROM `users`',
+            { type: sequelize.QueryTypes.SELECT });
+        return retorno;
+    } catch (error) {
+        res.status(500).send(error);
+    }
 };
 
 module.exports = {
@@ -76,12 +197,15 @@ module.exports = {
     verifyRoleDataSQL,
     getUserDataSql,
     selectProductsDataSql,
-    selectOrdersDataSql,
     insertOrdersDataSql,
-    selectOrderDataSql
+    selectOrderDataSql,
+    selectOrdersAdminDataSql,
+    selectOrderAdminDataSql,
+    updateOrdersAdminSql,
+    existinOrdersSQL,
+    insertProductDataSql,
+    updateProductsDataSql,
+    existingProductDataSql,
+    deleteProductDataSql,
+    selectUsersDataSql
 }
-
-
-//-------GET DATOS DEL USUARIO------------------------ 
-/* */
-//---------------------------------------------------

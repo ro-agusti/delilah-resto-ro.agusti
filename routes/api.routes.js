@@ -1,9 +1,9 @@
 const { Router } = require('express');
-const { postUser, postLogin, putRegister, getRegister, getProducts, newOrders, getOrder, deleteOrder, putAdmin } = require('../controllers/api.controllers');
-const { existingUser } = require('../middlewares/existing-data.middlewares');
+const { postUser, postLogin, putRegister, getRegister, getProducts, newOrders, getOrder, putAdmin, getOrdersAdmin, getOrderAdmin, putOrdersAdmin, postProductsAdmin, putProductsAdmin, getUsersAdmin, deleteProductAdmin } = require('../controllers/api.controllers');
+const { existingUser, existingOrders, existingProduct } = require('../middlewares/existing-data.middlewares');
 const { usernameRequiredField, nameSurnammeRequiredField, emailRequiredField, telephoneRequiredField, addressRequiredField, passwordRequiredField } = require('../middlewares/required-field.middlewares');
 const { emailSyntaxError, weakPassword } = require('../middlewares/regular.expressions..middlewares');
-const { dataError, verifyToken, verifyRoleUser, verifyRoleAdmin } = require('../middlewares/data.error.middleware');
+const { dataError, verifyToken, verifyRoleUser, verifyRoleAdmin, verifyState } = require('../middlewares/data.error.middleware');
 
 const router = Router();
 
@@ -32,7 +32,7 @@ router.post('/login',
     postLogin
 );
 
-router.put('/register/:id',
+router.put('/register/:idUser',
     [
         verifyRoleUser,
         verifyToken,
@@ -42,21 +42,20 @@ router.put('/register/:id',
     putRegister
 );
 
-router.get('/register/:id',
+router.get('/register/:idUser',
     [
         verifyToken
     ],
     getRegister);
 
-router.post('/orders/:id',
+router.post('/orders/:idUser',
     [
         verifyToken
     ],
     newOrders
 );
 
-//router.delete('/order/:id', deleteOrder);
-
+//-----verificar------------------------------------------------
 router.get('/order/:id',
     [
         verifyToken
@@ -65,12 +64,74 @@ router.get('/order/:id',
 
 router.get('/products', getProducts);
 
-router.put('/admin/:id',
+router.put('/admin/:idAdmin',
+    [
+        verifyRoleAdmin,
+        verifyToken,
+        emailSyntaxError,
+        weakPassword
+    ],
+    putAdmin
+);
+
+router.get('/ordersAdmin/:idAdmin',
     [
         verifyRoleAdmin,
         verifyToken
     ],
-    putAdmin
+    getOrdersAdmin
+);
+
+router.get('/orderAdmin/:idAdmin',
+    [
+        verifyRoleAdmin,
+        verifyToken
+    ],
+    getOrderAdmin
+);
+
+router.put('/ordersAdmin/:idAdmin',
+    [
+        verifyToken,
+        verifyRoleAdmin,
+        existingOrders,
+        verifyState
+    ],
+    putOrdersAdmin
+);
+
+router.post('/productsAdmin/:idAdmin',
+    [
+        verifyToken,
+        verifyRoleAdmin
+    ],
+    postProductsAdmin
+);
+
+router.put('/productsAdmin/:idAdmin',
+    [
+        verifyToken,
+        verifyRoleAdmin,
+        existingProduct
+    ],
+    putProductsAdmin
+);
+
+router.delete('/productsAdmin/:idAdmin/product/:idProducts',
+    [
+        verifyToken,
+        verifyRoleAdmin,
+        existingProduct
+    ],
+    deleteProductAdmin
+)
+
+router.get('/usersAdmin/:idAdmin',
+    [
+        verifyRoleAdmin,
+        verifyToken
+    ],
+    getUsersAdmin
 );
 
 module.exports = router;
