@@ -51,8 +51,8 @@ const verifyRoleDataSQL = async (idParams) => {
 
 const getUserDataSql = async (idParams) => {
     try {
-        const retorno = await sequelize.query('SELECT `username`,`name & surname`, `email`, `telephone`, `address`  FROM users WHERE ID_user = ?',
-            { replacements: [idParams], type: sequelize.QueryTypes.INSERT })
+        const retorno = await sequelize.query('SELECT `username`,`name & surname`, `email`, `telephone`, `address`  FROM `users` WHERE ID_user = ?',
+            { replacements: [idParams], type: sequelize.QueryTypes.SELECT })
         return retorno;
     } catch (error) {
         res.status(500).send(error);
@@ -180,13 +180,9 @@ const deleteProductDataSql = async(idProductParams) =>{
 }
 
 const selectUsersDataSql = async () => {
-    try {
-        const retorno = await sequelize.query('SELECT * FROM `users`',
-            { type: sequelize.QueryTypes.SELECT });
-        return retorno;
-    } catch (error) {
-        res.status(500).send(error);
-    }
+    const retorno = await sequelize.query('SELECT * FROM `users`',
+        { type: sequelize.QueryTypes.SELECT });
+    return retorno;
 };
 
 module.exports = {

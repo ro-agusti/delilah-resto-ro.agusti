@@ -35,8 +35,8 @@ const verifyToken = (req, res, next) => {
 
 const verifyRoleUser = async (req, res, next) => {
     try {
-        const { idAdmin } = req.params;
-        const sqlReturn = await verifyRoleDataSQL(idAdmin)
+        const { idUser } = req.params;
+        const sqlReturn = await verifyRoleDataSQL(idUser)
         if (sqlReturn[0].role !== 'USER') {
             return res.status(401).send('usuario no autorizado');
         } else {

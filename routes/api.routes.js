@@ -56,7 +56,7 @@ router.post('/orders/:idUser',
 );
 
 //-----verificar------------------------------------------------
-router.get('/order/:id',
+router.get('/order/:idUser/:idOrder',
     [
         verifyToken
     ],
@@ -108,7 +108,7 @@ router.post('/productsAdmin/:idAdmin',
     postProductsAdmin
 );
 
-router.put('/productsAdmin/:idAdmin',
+router.put('/productsAdmin/:idAdmin/:idProduct',
     [
         verifyToken,
         verifyRoleAdmin,
@@ -117,7 +117,7 @@ router.put('/productsAdmin/:idAdmin',
     putProductsAdmin
 );
 
-router.delete('/productsAdmin/:idAdmin/product/:idProducts',
+router.delete('/productsAdmin/:idAdmin/:idProduct',
     [
         verifyToken,
         verifyRoleAdmin,

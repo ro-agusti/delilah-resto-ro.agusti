@@ -29,9 +29,9 @@ const existingOrders = async(req,res,next) => {
 
 const existingProduct = async(req,res,next) => {
     try {
-        //const {idAdmin, idProduct} = req.params;
-        const { ID_product, product_name, price, image } = req.body;
-        const confirmed = await existingProductDataSql(ID_product)
+        const {idAdmin, idProduct} = req.params;
+       // const { ID_product, product_name, price, image } = req.body;
+        const confirmed = await existingProductDataSql(idProduct)
         if (confirmed.length>0) {
             next();
         } else {

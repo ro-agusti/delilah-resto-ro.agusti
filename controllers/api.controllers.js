@@ -8,8 +8,6 @@ const postUser = async (req, res) => {
     try {
         const sqlHelpers = await insertUserSQL(req.body)
         respuesta = {
-            error: false,
-            codigo: 200,
             mensaje: 'nuevo user',
             respuesta: { ...req.body, id: sqlHelpers[0] }
         };
@@ -24,15 +22,12 @@ const postLogin = async (req, res) => {
     try {
         const { username, email, password } = req.body;
         const confirmed = await verifyDataSQL(username, email, password)
-        console.log(confirmed);
         const signedObject = {
             id: confirmed[0].ID_user,
             username: confirmed[0].username
         }
         const token = jwt.sign(signedObject, process.env.SECRET);
         respuesta = {
-            error: false,
-            codigo: 200,
             mensaje: 'ingreso exitoso',
             respuesta: token
         };
@@ -45,12 +40,10 @@ const postLogin = async (req, res) => {
 //---MODIFICAR USUARIO
 const putRegister = async (req, res) => {
     try {
-        const { id } = req.params;
+        const { idUser } = req.params;
         const { nameSurname, email, telephone, address, password } = req.body;
-        const sqlHelpers = await modifyUserDataSQL(nameSurname, email, telephone, address, password, id)
+        const sqlHelpers = await modifyUserDataSQL(nameSurname, email, telephone, address, password, idUser)
         respuesta = {
-            error: false,
-            codigo: 200,
             mensaje: 'usuario modificado',
             respuesta: { ...req.body, id: sqlHelpers[0] }
         };
@@ -63,13 +56,11 @@ const putRegister = async (req, res) => {
 //---CONSEGUIR DATOS DE UN USUARIO
 const getRegister = async (req, res) => {
     try {
-        const { id } = req.params;
-        const sqlHelpers = await getUserDataSql(id);
+        const { idUser } = req.params;
+        const sqlHelpers = await getUserDataSql(idUser);
         respuesta = {
-            error: false,
-            codigo: 200,
             mensaje: 'usuario seleccionado',
-            respuesta: sqlHelpers[0]
+            respuesta: sqlHelpers
         };
         res.status(200).send(respuesta);
     } catch (error) {
@@ -80,12 +71,10 @@ const getRegister = async (req, res) => {
 //---NUEVO PEDIDO
 const newOrders = async (req, res) => {
     try {
-        const { id } = req.params;
+        const { idUser } = req.params;
         const { payment_type, order } = req.body;
-        const sqlHelpers = await insertOrdersDataSql(payment_type, order, id);
+        const sqlHelpers = await insertOrdersDataSql(payment_type, order, idUser);
         respuesta = {
-            error: false,
-            codigo: 200,
             mensaje: 'Nuevo pedido',
             respuesta: sqlHelpers
         };
@@ -95,14 +84,12 @@ const newOrders = async (req, res) => {
     }
 };
 
-//---DETALLE DEL PEDIDO  ----------VERIFICAR-----------------------------------
+//---DETALLE DEL PEDIDO
 const getOrder = async (req, res) => {
     try {
-        const { id } = req.params;//id del pedido
-        const sqlHelpers = await selectOrderDataSql(id);
+        const {idUser,idOrder } = req.params;//id del pedido
+        const sqlHelpers = await selectOrderDataSql(idOrder);
         respuesta = {
-            error: false,
-            codigo: 200,
             mensaje: 'Detalle del pedido',
             respuesta: sqlHelpers
         };
@@ -117,8 +104,6 @@ const getProducts = async (req, res) => {
     try {
         const sqlHelpers = await selectProductsDataSql();
         respuesta = {
-            error: false,
-            codigo: 200,
             mensaje: 'productos',
             respuesta: sqlHelpers
         };
@@ -131,12 +116,10 @@ const getProducts = async (req, res) => {
 //---MODIFICAR DATOS DEL ADMINISTRADOR
 const putAdmin = async (req, res) => {
     try {
-        const { id } = req.params;
+        const { idAdmin } = req.params;
         const { nameSurname, email, telephone, address, password } = req.body;
-        const sqlHelpers = await modifyUserDataSQL(nameSurname, email, telephone, address, password, id)
+        const sqlHelpers = await modifyUserDataSQL(nameSurname, email, telephone, address, password, idAdmin)
         respuesta = {
-            error: false,
-            codigo: 200,
             mensaje: 'Administrador modificado',
             respuesta: { ...req.body, id: sqlHelpers[0] }
         };
@@ -151,8 +134,6 @@ const getOrdersAdmin = async (req, res) => {
     try {
         const sqlHelpers = await selectOrdersAdminDataSql();
         respuesta = {
-            error: false,
-            codigo: 200,
             mensaje: 'Listado de ordenes',
             respuesta: sqlHelpers
         };
@@ -167,8 +148,6 @@ const getOrderAdmin = async (req, res) => {
     try {
         const sqlHelpers = await selectOrderAdminDataSql()
         respuesta = {
-            error: false,
-            codigo: 200,
             mensaje: 'Listado de detalles de pedidos',
             respuesta: sqlHelpers
         };
@@ -184,8 +163,6 @@ const putOrdersAdmin = async (req, res) => {
         const { ID_orders, state } = req.body;
         await updateOrdersAdminSql(state, ID_orders)
         respuesta = {
-            error: false,
-            codigo: 200,
             mensaje: 'Pedido Modificado',
             respuesta: req.body
         };
@@ -201,8 +178,6 @@ const postProductsAdmin = async (req, res) => {
         const { product_name, price, image } = req.body
         await insertProductDataSql(product_name, price, image)
         respuesta = {
-            error: false,
-            codigo: 200,
             mensaje: 'Nuevo Producto',
             respuesta: req.body
         };
@@ -215,11 +190,10 @@ const postProductsAdmin = async (req, res) => {
 //---ADMIN-MODIFICAR ALGUN PRODUCTO
 const putProductsAdmin = async (req, res) => {
     try {
+        const {idAdmin,idProduct}=req.params;
         const { ID_product, product_name, price, image } = req.body;
-        await updateProductsDataSql(product_name, price, image, ID_product);
+        await updateProductsDataSql(product_name, price, image, idProduct);
         respuesta = {
-            error: false,
-            codigo: 200,
             mensaje: 'Producto Modificado',
             respuesta: req.body
         };
@@ -235,8 +209,6 @@ const deleteProductAdmin = async (req, res) => {
         const { idAdmin, idProduct } = req.params;
         await deleteProductDataSql(idProduct);
         respuesta = {
-            error: false,
-            codigo: 200,
             mensaje: 'Producto Eliminado',
             respuesta: req.body
         };
@@ -251,8 +223,6 @@ const getUsersAdmin = async (req, res) => {
     try {
         const sqlHelpers = await selectUsersDataSql();
         respuesta = {
-            error: false,
-            codigo: 200,
             mensaje: 'Listado de usuarios',
             respuesta: sqlHelpers
         };
