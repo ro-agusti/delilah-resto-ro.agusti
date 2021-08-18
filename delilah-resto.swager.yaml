@@ -1,0 +1,553 @@
+swagger: "2.0"
+info:
+  description: "El objetivo del trabajo es generar el backend de una app de pedidos de comida, creando la bases de datos relacionales, endpoints funcionales, middlewares necesarios y documentación."
+  version: "1.0.0"
+  title: "Delilah Resto"
+  termsOfService: "http://ejemplo/tyc/"
+  contact:
+    email: "user1@hotmail.com"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "deliah-resto"
+basePath: "/v2"
+tags:
+- name: "register"
+  description: "Operaciones sobre los usuarios"
+  externalDocs:
+    description: ""
+    url: "http://localhost:3000/api/register"
+- name: "login"
+  description: "Inicio de sesion"
+  externalDocs:
+    description: ""
+    url: "http://localhost:3000/api/login"
+- name: "products"
+  description: "Informacion de los productos"
+  externalDocs:
+    description: ""
+    url: "http://localhost:3000/api/products"
+- name: "orders"
+  description: "Informacion de los pedidos"
+  externalDocs:
+    description: ""
+    url: "http://localhost:3000/api/orders"
+- name: "order"
+  description: "Detalle de los pedidos"
+  externalDocs:
+    description: ""
+    url: "http://localhost:3000/api/order"
+- name: "admin"
+  description: "Informacion para el administrador"
+  externalDocs:
+    description: ""
+    url: "http://localhost:3000/api/admin"
+- name: "ordersAdmin"
+  description: "informacion para el administrador sobre los pedidos"
+  externalDocs:
+    description: ""
+    url: "http://localhost:3000/api/ordersAdmin"
+- name: "orderAdmin"
+  description: "informacion para el administrador sobre los detalles de los pedidos"
+  externalDocs:
+    description: ""
+    url: "http://localhost:3000/api/orderAdmin"
+- name: "productsAdmin"
+  description: "informacion para el administrador sobre los productos"
+  externalDocs:
+    description: ""
+    url: "http://localhost:3000/api/productsAdmin"
+- name: "usersAdmin"
+  description: "informacion para el administrador sobre los usuarios"
+  externalDocs:
+    description: ""
+    url: "http://localhost:3000/api/usersAdmin"
+schemes:
+- "https"
+- "http"
+paths:
+  /register:
+    post:
+      tags:
+      - "user"
+      summary: "creo un nuevo usuario para Delilah Resto"
+      description: ""
+      operationId: "nuevoPropietario"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Objeto user para asignar a Delilah Resto"
+        required: true
+        schema:
+          $ref: "#/definitions/Usuarios"
+      responses:
+        "403":
+          description: "Campo requerido"
+        "405":
+          description: "Username ya existente"
+        "408":
+          description: "Error en la sintaxis del email"
+        "410":
+          description: "Contraseña debil"
+
+  /register/:IDuser:
+    put:
+      tags:
+      - "register"
+      summary: "Modifico los datos de un usuario"
+      description: ""
+      operationId: "modificoUsuario"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Objeto usuario para asignar a Delilah Resto"
+        required: true
+        schema:
+          $ref: "#/definitions/Usuarios"
+      responses:
+        "406":
+          description: "Falta token"
+        "407":
+          description: "Uduario no autorizado"
+        "408":
+          description: "Error en la sintaxis del email"
+        "410":
+          description: "Contraseña debil"
+  
+    get:
+      tags:
+      - "register"
+      summary: "Muestro los datos de un usuario"
+      description: ""
+      operationId: "obtengoUsuario"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Objeto usuario para asignar a Delilah Resto"
+        required: true
+        schema:
+          $ref: "#/definitions/Usuarios"
+      responses:
+        "406":
+          description: "Falta token"
+          
+  /login:
+    post:
+      tags:
+      - "login"
+      summary: "entro a Delilah Resto cono usuario o admin"
+      description: ""
+      operationId: "inicioSesion"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Objeto user para asignar a Delilah Resto"
+        required: true
+        schema:
+          $ref: "#/definitions/Login"
+      responses:
+        "400":
+          description: "Elemento Invalido"
+        "403":
+          description: "Campo requerido"
+          
+  /products:
+    get:
+      tags:
+      - "products"
+      summary: "Muestro los productos de Delilah Resto"
+      description: ""
+      operationId: "obtengoProductos"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Objeto productos de Delilah Resto"
+        required: true
+        schema:
+          $ref: "#/definitions/productsAdmin"
+      responses:
+        "400":
+          description: "Elemento Invalido"
+          
+  /orders/:IDuser:
+    post:
+      tags:
+      - "orders"
+      summary: "nueva orden de un usuario"
+      description: ""
+      operationId: "nuevaOrden"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Objeto user para asignar a Delilah Resto"
+        required: true
+        schema:
+          $ref: "#/definitions/Orders"
+      responses:
+        "406":
+          description: "Falta token"
+  /order/:IDuser/:IDOrder:
+    get:
+      tags:
+      - "order"
+      summary: "obtengo informacion del pedido"
+      description: ""
+      operationId: "obtengoInfoPedido"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Objeto productos de Delilah Resto"
+        required: true
+        schema:
+          $ref: "#/definitions/Orders"
+      responses:
+        "406":
+          description: "Falta token"
+  
+  /admin/:IDadmin:
+    put:
+      tags:
+      - "admin"
+      summary: "Modifico los datos del administrador"
+      description: ""
+      operationId: "modificoAdministrador"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Objeto administrador de Delilah Resto"
+        required: true
+        schema:
+          $ref: "#/definitions/Admin"
+      responses:
+        "406":
+          description: "Falta token"
+        "407":
+          description: "Uduario no autorizado"
+        "408":
+          description: "Error en la sintaxis del email"
+        "410":
+          description: "Contraseña debil"
+          
+  /ordersAdmin/:IDadmin:
+    get:
+      tags:
+      - "ordersAdmin"
+      summary: "obtengo informacion de todos los pedidos"
+      description: ""
+      operationId: "obtengoInfoPedidos"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Objeto pedidos de Delilah Resto"
+        required: true
+        schema:
+          $ref: "#/definitions/ordersAdmin"
+      responses:
+        "406":
+          description: "Falta token"
+        "407":
+          description: "Uduario no autorizado"
+    put:
+      tags:
+      - "ordersAdmin"
+      summary: "Modifico el estado del pedido"
+      description: ""
+      operationId: "modificoEstadoPedido"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Objeto pedido de Delilah Resto"
+        required: true
+        schema:
+          $ref: "#/definitions/Admin"
+      responses:
+        "406":
+          description: "Falta token"
+        "407":
+          description: "Uduario no autorizado"
+        "412":
+          description: "No existe ese numero de orden"
+        "415":
+          description: "Estado de orden inexistente"
+          
+  /orderAdmin/:IDadmin:
+    get:
+      tags:
+      - "orderAdmin"
+      summary: "obtengo informacion de todos los detalles de los pedidos"
+      description: ""
+      operationId: "obtengoInfoDetallesPedidos"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Objeto detalles pedidos de Delilah Resto"
+        required: true
+        schema:
+          $ref: "#/definitions/ordersAdmin"
+      responses:
+        "406":
+          description: "Falta token"
+        "407":
+          description: "Uduario no autorizado"
+          
+  /productsAdmin/:IDadmin:
+    post:
+      tags:
+      - "productsAdmin"
+      summary: "nuevo producto"
+      description: ""
+      operationId: "nuevaProducto"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Objeto producto para asignar a Delilah Resto"
+        required: true
+        schema:
+          $ref: "#/definitions/productsAdmin"
+      responses:
+        "406":
+          description: "Falta token"
+        "407":
+          description: "Uduario no autorizado"
+          
+  /productsAdmin/:IDadmin/:IDproduct:
+    put:
+      tags:
+      - "productsAdmin"
+      summary: "Modifico el producto"
+      description: ""
+      operationId: "modificoProducto"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Objeto producto de Delilah Resto"
+        required: true
+        schema:
+          $ref: "#/definitions/productsAdmin"
+      responses:
+        "406":
+          description: "Falta token"
+        "407":
+          description: "Uduario no autorizado"
+        "416":
+          description: "Producto no existente"
+    delete:
+      tags:
+      - "productsAdmin"
+      summary: "elimino producto"
+      description: ""
+      operationId: "eliminoProducto"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Detalle del producto eliminado"
+        required: true
+        schema:
+          $ref: "#/definitions/productsAdmin"
+      responses:
+        "406":
+          description: "Falta token"
+        "407":
+          description: "Uduario no autorizado"
+        "416":
+          description: "Producto no existente"
+          
+  /usersAdmin/:IDadmin:
+    get:
+      tags:
+      - "usersAdmin"
+      summary: "obtengo informacion de todos los usuarios"
+      description: ""
+      operationId: "obtengoInfoUsuarios"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Objeto usuarios de Delilah Resto"
+        required: true
+        schema:
+          $ref: "#/definitions/Usuarios"
+      responses:
+        "406":
+          description: "Falta token"
+        "407":
+          description: "Uduario no autorizado"
+          
+definitions:
+  Usuarios:
+    type: "object"
+    properties:
+      username:
+        type: "string"
+      nameSurname:
+        type: "string"
+      email:
+        type: "string"
+      telephone:
+        type: "string"
+      address:
+        type: "string"
+      password:
+        type: "integer"
+        format: "int32"
+    xml:
+      name: "usuarios"
+  Login:
+      type: object
+      properties:
+        username:
+          type: integer
+          format: int64
+        email:
+          type: string
+        password:
+          type: string
+      xml:
+        name: login
+  Orders: 
+      type: object
+      properties:
+        payment_type:
+          type: integer
+          format: int64
+        order:
+          type: object
+          properties:
+            product_ID:
+              type: integer
+              format: int64
+            amount:
+              type: integer
+              format: int64
+      xml:
+        name: orders
+  Admin:
+      type: object
+      properties:
+        nameSurname:
+          type: integer
+          format: int64
+        email:
+          type: string
+        telephone:
+          type: string
+        address:
+          type: string
+        password:
+          type: string
+      xml:
+        name: admin
+  ordersAdmin:
+      type: object
+      properties:
+        ID_orders:
+          type: integer
+          format: int64
+        state:
+          type: string
+      xml:
+        name: ordersAdmin
+  productsAdmin:
+      type: object
+      properties:
+        product_name:
+          type: integer
+          format: int64
+        price:
+          type: string
+        image:
+          type: string
+      xml:
+        name: admin
+externalDocs:
+  description: "Find out more about Swagger"
+  url: "http://swagger.io"

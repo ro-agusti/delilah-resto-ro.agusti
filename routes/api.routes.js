@@ -55,10 +55,11 @@ router.post('/orders/:idUser',
     newOrders
 );
 
-//-----verificar------------------------------------------------
+//--------verificar
 router.get('/order/:idUser/:idOrder',
     [
-        verifyToken
+        verifyToken,
+        existingOrders
     ],
     getOrder);
 
