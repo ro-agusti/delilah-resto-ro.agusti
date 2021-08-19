@@ -17,8 +17,9 @@ El objetivo del trabajo es generar el backend de una app de pedidos de comida, c
 
 ## Documentación de la API
 
-//
+Abrir el archivo `delilah-resto.yaml` y copiar su contenido en [Swagger](https://editor.swagger.io/) o importar el mismo desde las opciones
 
+Se listarán los endpoints y métodos disponibles y la información necesaria para hacer uso de los mismos
 
 ## Instalación e inicializacion del proyecto
 
@@ -55,9 +56,8 @@ npm install
 O desde `nodemon app.js` si es que lo tiene instalado de manera global en su dispositivo.
 
 ### 5 - Listo para empezar!
-Testear los endpoints provistos desde el archivo `request.rest` colocada en el indice de la carpeta clonada o desde `Postman` para poder hacer uso de la API y base de datos generadas
+Testear los endpoints provistos desde el archivo `request.rest` colocada en el indice de la carpeta clonada.
 
 
 
  -*-*-*-*-*-*-*--*-*-*
-[Colección de Postman](https://documenter.getpostman.com/view/10237996/SzYdSbvb)

@@ -1,0 +1,144 @@
+@url=http://localhost:3000/api
+@tokenUser=Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywidXNlcm5hbWUiOiJ1c2VyMSIsImlhdCI6MTYyOTQwMTQ1Nn0.VZj5clTuMRgGG9j1oXEO-LIApHVlo7gezgIykhHb8J8
+@tokenAdmin=Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwidXNlcm5hbWUiOiJBRE1JTklTVFJBRE9SIiwiaWF0IjoxNjI4OTcyMDMzfQ.UWVk_msqVzVZiRGUVKYzhOSx0ODXUUUuFl_lh4ZiTMM
+
+###
+post {{url}}/register
+Content-Type: application/json
+
+{
+    "username": "user8",
+    "nameSurname": "user1",
+    "email": "user1@hotmail.com",
+    "telephone": "21354548",
+    "address": "san martin 452",
+    "password": "12345Us#"
+}
+
+###
+post {{url}}/login
+Content-Type: application/json
+
+{
+    "username": "user1",
+    "email": "user1@hotmail.com",
+    "password": "12345Us#"
+}
+
+###
+PUT {{url}}/register/3
+Content-Type:  application/json
+Authorization: {{tokenUser}}
+
+
+{
+    "nameSurname": "user modificado5",
+    "email": "user1@hotmail.com",
+    "telephone": "21354548",
+    "address": "san martin 452",
+    "password": "12345Us#"
+}
+
+###
+GET {{url}}/register/3
+Content-Type:  application/json
+Authorization: {{tokenUser}}
+
+###
+GET {{url}}/products
+
+###
+POST {{url}}/orders/3
+Content-Type:  application/json
+Authorization: {{tokenUser}}
+
+
+{
+    "payment_type": "TARJETA",
+    "order":[
+        {
+         "product_ID": 4,
+         "amount": 44  
+        },
+        {
+         "product_ID": 4,
+         "amount": 22  
+        },
+        {
+         "product_ID": 4,
+         "amount": 33  
+        }
+    ]
+}
+
+###
+GET {{url}}/order/3/51
+Content-Type:  application/json
+Authorization: {{tokenUser}}
+
+###
+PUT {{url}}/admin/2
+Content-Type:  application/json
+Authorization: {{tokenAdmin}}
+
+
+{
+    "nameSurname": "ADMINISTRADOR5",
+    "email": "user1@hotmail.com",
+    "telephone": "21354548",
+    "address": "san martin 452",
+    "password": "12345Us##"
+}
+
+###
+GET {{url}}/ordersAdmin/2
+Content-Type:  application/json
+Authorization: {{tokenAdmin}}
+
+### 
+GET {{url}}/orderAdmin/2
+Content-Type:  application/json
+Authorization: {{tokenAdmin}}
+
+###
+PUT {{url}}/ordersAdmin/2
+Content-Type:  application/json
+Authorization: {{tokenAdmin}}
+
+
+{
+    "ID_orders": "51",
+    "state": "PREPARANDO"
+}
+
+###
+POST {{url}}/productsAdmin/2
+Content-Type:  application/json
+Authorization: {{tokenAdmin}}
+
+{
+    "product_name": "LOMITO",
+    "price": 700,
+    "image":""
+}
+
+###
+PUT {{url}}/productsAdmin/2/7
+Content-Type:  application/json
+Authorization: {{tokenAdmin}}
+
+{
+    "product_name": "hamburguesa",
+    "price": 550,
+    "image":""
+}
+
+###
+DELETE {{url}}/productsAdmin/2/7
+Content-Type:  application/json
+Authorization: {{tokenAdmin}}
+
+###
+GET {{url}}/usersAdmin/2
+Content-Type:  application/json
+Authorization: {{tokenAdmin}}

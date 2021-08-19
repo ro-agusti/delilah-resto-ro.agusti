@@ -71,7 +71,7 @@ const selectProductsDataSql = async () => {
 
 const selectOrderDataSql = async (idParams) => {
     try {
-        const retorno = await sequelize.query('SELECT * FROM `order`, `products`, `orders` WHERE order.orders_ID = orders.ID_orders AND orders.ID_orders=? ',
+        const retorno = await sequelize.query('SELECT * FROM `order`, `products`, `orders` WHERE orders.ID_orders=? ',
             { replacements: [idParams], type: sequelize.QueryTypes.SELECT })
         return retorno;
     } catch (error) {

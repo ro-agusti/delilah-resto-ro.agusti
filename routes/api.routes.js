@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const { postUser, postLogin, putRegister, getRegister, getProducts, newOrders, getOrder, putAdmin, getOrdersAdmin, getOrderAdmin, putOrdersAdmin, postProductsAdmin, putProductsAdmin, getUsersAdmin, deleteProductAdmin } = require('../controllers/api.controllers');
-const { existingUser, existingOrders, existingProduct } = require('../middlewares/existing-data.middlewares');
+const { existingUser, existingOrders, existingProduct, existingOrdersAdmin } = require('../middlewares/existing-data.middlewares');
 const { usernameRequiredField, nameSurnammeRequiredField, emailRequiredField, telephoneRequiredField, addressRequiredField, passwordRequiredField } = require('../middlewares/required-field.middlewares');
 const { emailSyntaxError, weakPassword } = require('../middlewares/regular.expressions..middlewares');
 const { dataError, verifyToken, verifyRoleUser, verifyRoleAdmin, verifyState } = require('../middlewares/data.error.middleware');
@@ -56,7 +56,7 @@ router.post('/orders/:idUser',
 );
 
 //--------verificar
-router.get('/order/:idUser/:idOrder',
+router.get('/order/:idUser/:idOrders',
     [
         verifyToken,
         existingOrders
@@ -95,7 +95,7 @@ router.put('/ordersAdmin/:idAdmin',
     [
         verifyToken,
         verifyRoleAdmin,
-        existingOrders,
+        existingOrdersAdmin,
         verifyState
     ],
     putOrdersAdmin

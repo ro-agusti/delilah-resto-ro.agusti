@@ -13,10 +13,24 @@ const existingUser = async(req,res,next) => {
     }
 };
 
-const existingOrders = async(req,res,next) => {
+const existingOrdersAdmin = async(req,res,next) => {
     try {
         const { ID_orders, state } = req.body;
         const confirmed = await existinOrdersSQL(ID_orders)
+        if (confirmed.length>0) {
+            next();
+        } else {
+            res.status(403).send('No existe el pedido selecionado');
+        }
+    } catch (error) {
+        res.status(500).send(error);
+    }
+};
+
+const existingOrders = async(req,res,next) => {
+    try {
+        const { idUser, idOrders } = req.params;
+        const confirmed = await existinOrdersSQL(idOrders)
         if (confirmed.length>0) {
             next();
         } else {
@@ -45,5 +59,6 @@ const existingProduct = async(req,res,next) => {
 module.exports = {
     existingUser,
     existingOrders,
-    existingProduct
+    existingProduct,
+    existingOrdersAdmin
 }

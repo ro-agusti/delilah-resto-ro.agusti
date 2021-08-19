@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 15, 2021 at 03:40 PM
+-- Generation Time: Aug 19, 2021 at 09:48 PM
 -- Server version: 10.4.20-MariaDB
 -- PHP Version: 8.0.8
 
@@ -34,6 +34,15 @@ CREATE TABLE `order` (
   `amount` int(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `order`
+--
+
+INSERT INTO `order` (`ID_order`, `orders_ID`, `product_ID`, `amount`) VALUES
+(27, 51, 4, 44),
+(28, 51, 4, 22),
+(29, 51, 4, 33);
+
 -- --------------------------------------------------------
 
 --
@@ -47,6 +56,13 @@ CREATE TABLE `orders` (
   `payment_type` enum('TARJETA','TRANSFERENCIA','EFECTIVO') NOT NULL,
   `user_ID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `orders`
+--
+
+INSERT INTO `orders` (`ID_orders`, `state`, `time`, `payment_type`, `user_ID`) VALUES
+(51, 'PREPARANDO', '2021-08-19 19:32:10', 'TARJETA', 3);
 
 -- --------------------------------------------------------
 
@@ -139,13 +155,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `order`
 --
 ALTER TABLE `order`
-  MODIFY `ID_order` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `ID_order` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `ID_orders` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+  MODIFY `ID_orders` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 
 --
 -- AUTO_INCREMENT for table `products`

@@ -17,7 +17,7 @@ const postUser = async (req, res) => {
     }
 };
 
-//---INGRESAR A LA SECION
+//---INGRESAR A LA SECION-------------
 const postLogin = async (req, res) => {
     try {
         const { username, email, password } = req.body;
@@ -87,8 +87,8 @@ const newOrders = async (req, res) => {
 //---DETALLE DEL PEDIDO
 const getOrder = async (req, res) => {
     try {
-        const {idUser,idOrder } = req.params;//id del pedido
-        const sqlHelpers = await selectOrderDataSql(idOrder);
+        const {idUser,idOrders } = req.params;//id del pedido
+        const sqlHelpers = await selectOrderDataSql(idOrders);
         respuesta = {
             mensaje: 'Detalle del pedido',
             respuesta: sqlHelpers
