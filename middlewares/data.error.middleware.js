@@ -33,45 +33,41 @@ const verifyToken = (req, res, next) => {
     })
 };
 
-const verifyRoleUser = async (req, res, next) => {
-    try {
-        const { idUser } = req.params;
-        const sqlReturn = await verifyRoleDataSQL(idUser)
-        if (sqlReturn[0].role !== 'USER') {
-            return res.status(401).send('usuario no autorizado');
-        } else {
-            next();
-        }
-    } catch (error) {
-        res.status(500).send(error);
+const verifyRoleUser = (req, res, next) => {
+    let { authorization } = req.headers;
+    const tokenSended = authorization.split(' ')[1]
+    const jwtDecode = jwt.decode(tokenSended, process.env.SECRET);
+    if (jwtDecode.role !== 'USER') {
+        return res.status(401).send('unauthorized user');
+    } else {
+        req.user= jwtDecode
+        next();
     }
 };
 
-const verifyRoleAdmin = async (req, res, next) => {
-    try {
-        const { idAdmin } = req.params;
-        const sqlReturn = await verifyRoleDataSQL(idAdmin)
-        if (sqlReturn[0].role !== 'ADMIN') {
-            return res.status(401).send('usuario no autorizado');
-        } else {
-            next();
-        }
-    } catch (error) {
-        res.status(500).send(error);
+const verifyRoleAdmin = (req, res, next) => {
+    let { authorization } = req.headers;
+    const tokenSended = authorization.split(' ')[1]
+    const jwtDecode = jwt.decode(tokenSended, process.env.SECRET);
+    if (jwtDecode.role !== 'ADMIN') {
+        return res.status(401).send('unauthorized user');
+    } else {
+        req.admin = jwtDecode
+        next();
     }
 };
 
 const verifyState = (req,res,next) => {
-    const { ID_orders, state } = req.body;
-    if (state == 'NUEVO'){
+    let { ID_orders, state } = req.body;
+    if (state = 'NUEVO'){
         next();
-    } else if (state == 'CONFIRMADO') {
+    } else if (state = 'CONFIRMADO') {
         next();  
-    } else if (state == 'PREPARANDO') {
+    } else if (state = 'PREPARANDO') {
         next();
-    }else if (state == 'ENVIADO') {
+    }else if (state = 'ENVIADO') {
         next();
-    } else if (state == 'ENTREGADO') {
+    } else if (state = 'ENTREGADO') {
         next();
     } else {     
         return res.status(401).send('error en el estado enviado');

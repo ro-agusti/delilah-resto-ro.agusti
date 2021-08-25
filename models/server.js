@@ -3,7 +3,6 @@ const cors = require('cors');
 const helmet = require('helmet');
 require('dotenv').config();
 const sequelize = require('../database/connection.database.js');
-//data base
 
 class Server {
     constructor(){

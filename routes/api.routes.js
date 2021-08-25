@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { postUser, postLogin, putRegister, getRegister, getProducts, newOrders, getOrder, putAdmin, getOrdersAdmin, getOrderAdmin, putOrdersAdmin, postProductsAdmin, putProductsAdmin, getUsersAdmin, deleteProductAdmin } = require('../controllers/api.controllers');
+const { postUser, postLogin, putRegister, getRegister, getProducts, newOrders, getOrder, putAdmin, getOrdersAdmin, getOrderAdmin, putOrdersAdmin, postProductsAdmin, putProductsAdmin, getUsersAdmin, deleteProductAdmin, deleteOrdersAdmin } = require('../controllers/api.controllers');
 const { existingUser, existingOrders, existingProduct, existingOrdersAdmin } = require('../middlewares/existing-data.middlewares');
 const { usernameRequiredField, nameSurnammeRequiredField, emailRequiredField, telephoneRequiredField, addressRequiredField, passwordRequiredField } = require('../middlewares/required-field.middlewares');
 const { emailSyntaxError, weakPassword } = require('../middlewares/regular.expressions..middlewares');
@@ -32,7 +32,7 @@ router.post('/login',
     postLogin
 );
 
-router.put('/register/:idUser',
+router.put('/register',
     [
         verifyRoleUser,
         verifyToken,
@@ -42,30 +42,32 @@ router.put('/register/:idUser',
     putRegister
 );
 
-router.get('/register/:idUser',
+router.get('/register',
     [
-        verifyToken
+        verifyToken,
+        verifyRoleUser
     ],
     getRegister);
 
-router.post('/orders/:idUser',
+router.post('/orders',
     [
-        verifyToken
+        verifyToken,
+        verifyRoleUser
     ],
     newOrders
 );
 
-//--------verificar
-router.get('/order/:idUser/:idOrders',
+router.get('/order/:idOrders',
     [
         verifyToken,
+        verifyRoleUser,
         existingOrders
     ],
     getOrder);
 
 router.get('/products', getProducts);
 
-router.put('/admin/:idAdmin',
+router.put('/admin',
     [
         verifyRoleAdmin,
         verifyToken,
@@ -75,7 +77,7 @@ router.put('/admin/:idAdmin',
     putAdmin
 );
 
-router.get('/ordersAdmin/:idAdmin',
+router.get('/ordersAdmin',
     [
         verifyRoleAdmin,
         verifyToken
@@ -83,7 +85,7 @@ router.get('/ordersAdmin/:idAdmin',
     getOrdersAdmin
 );
 
-router.get('/orderAdmin/:idAdmin',
+router.get('/orderAdmin',
     [
         verifyRoleAdmin,
         verifyToken
@@ -91,17 +93,26 @@ router.get('/orderAdmin/:idAdmin',
     getOrderAdmin
 );
 
-router.put('/ordersAdmin/:idAdmin',
+router.put('/ordersAdmin/:idOrders',
     [
         verifyToken,
         verifyRoleAdmin,
-        existingOrdersAdmin,
+        existingOrders,
         verifyState
     ],
     putOrdersAdmin
 );
 
-router.post('/productsAdmin/:idAdmin',
+router.delete('/ordersAdmin/:idOrders',
+    [
+        verifyToken,
+        verifyRoleAdmin,
+        existingOrders
+    ],
+    deleteOrdersAdmin
+);
+
+router.post('/productsAdmin',
     [
         verifyToken,
         verifyRoleAdmin
@@ -109,7 +120,7 @@ router.post('/productsAdmin/:idAdmin',
     postProductsAdmin
 );
 
-router.put('/productsAdmin/:idAdmin/:idProduct',
+router.put('/productsAdmin/:idProduct',
     [
         verifyToken,
         verifyRoleAdmin,
@@ -118,7 +129,7 @@ router.put('/productsAdmin/:idAdmin/:idProduct',
     putProductsAdmin
 );
 
-router.delete('/productsAdmin/:idAdmin/:idProduct',
+router.delete('/productsAdmin/:idProduct',
     [
         verifyToken,
         verifyRoleAdmin,
@@ -127,7 +138,7 @@ router.delete('/productsAdmin/:idAdmin/:idProduct',
     deleteProductAdmin
 )
 
-router.get('/usersAdmin/:idAdmin',
+router.get('/usersAdmin',
     [
         verifyRoleAdmin,
         verifyToken

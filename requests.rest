@@ -1,6 +1,6 @@
 @url=http://localhost:3000/api
-@tokenUser=Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywidXNlcm5hbWUiOiJ1c2VyMSIsImlhdCI6MTYyOTQwMTQ1Nn0.VZj5clTuMRgGG9j1oXEO-LIApHVlo7gezgIykhHb8J8
-@tokenAdmin=Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwidXNlcm5hbWUiOiJBRE1JTklTVFJBRE9SIiwiaWF0IjoxNjI4OTcyMDMzfQ.UWVk_msqVzVZiRGUVKYzhOSx0ODXUUUuFl_lh4ZiTMM
+@tokenUser=Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywidXNlcm5hbWUiOiJ1c2VyMSIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNjI5NzU5NzIwfQ.W7RnvU9NkH05GrP8wi05JIqGziTVVVodscTgaKBHI1M
+@tokenAdmin=Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwidXNlcm5hbWUiOiJBRE1JTklTVFJBRE9SIiwicm9sZSI6IkFETUlOIiwiaWF0IjoxNjI5NzU5NTg0fQ.RKg3q-Zkzyhcz7LcIazZXYGhJJtgRoh4pMtURyeLjhg
 
 ###
 post {{url}}/register
@@ -26,13 +26,13 @@ Content-Type: application/json
 }
 
 ###
-PUT {{url}}/register/3
+PUT {{url}}/register
 Content-Type:  application/json
 Authorization: {{tokenUser}}
 
 
 {
-    "nameSurname": "user modificado5",
+    "nameSurname": "user modificado8",
     "email": "user1@hotmail.com",
     "telephone": "21354548",
     "address": "san martin 452",
@@ -40,7 +40,7 @@ Authorization: {{tokenUser}}
 }
 
 ###
-GET {{url}}/register/3
+GET {{url}}/register
 Content-Type:  application/json
 Authorization: {{tokenUser}}
 
@@ -48,42 +48,42 @@ Authorization: {{tokenUser}}
 GET {{url}}/products
 
 ###
-POST {{url}}/orders/3
+POST {{url}}/orders
 Content-Type:  application/json
 Authorization: {{tokenUser}}
 
 
 {
-    "payment_type": "TARJETA",
+    "payment_type": "tarjeta",
     "order":[
         {
-         "product_ID": 4,
-         "amount": 44  
+         "product_ID": 8,
+         "amount": 1  
         },
         {
          "product_ID": 4,
-         "amount": 22  
+         "amount": 2  
         },
         {
-         "product_ID": 4,
-         "amount": 33  
+         "product_ID": 9,
+         "amount": 3  
         }
     ]
 }
 
 ###
-GET {{url}}/order/3/51
+GET {{url}}/order/52
 Content-Type:  application/json
 Authorization: {{tokenUser}}
 
 ###
-PUT {{url}}/admin/2
+PUT {{url}}/admin
 Content-Type:  application/json
 Authorization: {{tokenAdmin}}
 
 
 {
-    "nameSurname": "ADMINISTRADOR5",
+    "nameSurname": "ADMINISTRADOR",
     "email": "user1@hotmail.com",
     "telephone": "21354548",
     "address": "san martin 452",
@@ -91,39 +91,43 @@ Authorization: {{tokenAdmin}}
 }
 
 ###
-GET {{url}}/ordersAdmin/2
+GET {{url}}/ordersAdmin
 Content-Type:  application/json
 Authorization: {{tokenAdmin}}
 
 ### 
-GET {{url}}/orderAdmin/2
+GET {{url}}/orderAdmin
 Content-Type:  application/json
 Authorization: {{tokenAdmin}}
 
 ###
-PUT {{url}}/ordersAdmin/2
+PUT {{url}}/ordersAdmin/69
 Content-Type:  application/json
 Authorization: {{tokenAdmin}}
 
 
 {
-    "ID_orders": "51",
     "state": "PREPARANDO"
 }
 
 ###
-POST {{url}}/productsAdmin/2
+DELETE {{url}}/ordersAdmin/52
+Content-Type:  application/json
+Authorization: {{tokenAdmin}}
+
+###
+POST {{url}}/productsAdmin
 Content-Type:  application/json
 Authorization: {{tokenAdmin}}
 
 {
     "product_name": "LOMITO",
-    "price": 700,
+    "price": 750,
     "image":""
 }
 
 ###
-PUT {{url}}/productsAdmin/2/7
+PUT {{url}}/productsAdmin/8
 Content-Type:  application/json
 Authorization: {{tokenAdmin}}
 
@@ -134,11 +138,11 @@ Authorization: {{tokenAdmin}}
 }
 
 ###
-DELETE {{url}}/productsAdmin/2/7
+DELETE {{url}}/productsAdmin/7
 Content-Type:  application/json
 Authorization: {{tokenAdmin}}
 
 ###
-GET {{url}}/usersAdmin/2
+GET {{url}}/usersAdmin
 Content-Type:  application/json
 Authorization: {{tokenAdmin}}

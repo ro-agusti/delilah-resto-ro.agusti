@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 19, 2021 at 09:48 PM
+-- Generation Time: Aug 25, 2021 at 09:32 PM
 -- Server version: 10.4.20-MariaDB
 -- PHP Version: 8.0.8
 
@@ -24,10 +24,10 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `order`
+-- Table structure for table `detail`
 --
 
-CREATE TABLE `order` (
+CREATE TABLE `detail` (
   `ID_order` int(11) NOT NULL,
   `orders_ID` int(11) NOT NULL,
   `product_ID` int(11) NOT NULL,
@@ -35,13 +35,33 @@ CREATE TABLE `order` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `order`
+-- Dumping data for table `detail`
 --
 
-INSERT INTO `order` (`ID_order`, `orders_ID`, `product_ID`, `amount`) VALUES
+INSERT INTO `detail` (`ID_order`, `orders_ID`, `product_ID`, `amount`) VALUES
 (27, 51, 4, 44),
 (28, 51, 4, 22),
-(29, 51, 4, 33);
+(29, 51, 4, 33),
+(45, 65, 4, 33),
+(46, 65, 4, 22),
+(48, 66, 4, 22),
+(49, 66, 4, 33),
+(50, 67, 8, 4),
+(51, 67, 4, 2),
+(52, 67, 9, 3),
+(53, 68, 8, 4),
+(54, 68, 4, 2),
+(55, 68, 9, 3),
+(56, 69, 8, 4),
+(57, 69, 4, 2),
+(58, 69, 9, 3),
+(66, 73, 4, 2),
+(67, 73, 9, 3),
+(68, 74, 8, 1),
+(69, 74, 4, 2),
+(70, 74, 9, 3),
+(71, 75, 8, 1),
+(72, 75, 4, 2);
 
 -- --------------------------------------------------------
 
@@ -62,7 +82,27 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`ID_orders`, `state`, `time`, `payment_type`, `user_ID`) VALUES
-(51, 'PREPARANDO', '2021-08-19 19:32:10', 'TARJETA', 3);
+(51, 'PREPARANDO', '2021-08-19 19:32:10', 'TARJETA', 3),
+(53, 'NUEVO', '2021-08-23 23:18:47', 'EFECTIVO', 3),
+(54, 'NUEVO', '2021-08-23 23:20:03', 'EFECTIVO', 3),
+(55, 'NUEVO', '2021-08-23 23:37:38', 'EFECTIVO', 3),
+(56, 'NUEVO', '2021-08-23 23:39:41', 'EFECTIVO', 3),
+(57, 'NUEVO', '2021-08-23 23:46:58', 'EFECTIVO', 3),
+(58, 'NUEVO', '2021-08-23 23:49:43', 'EFECTIVO', 3),
+(59, 'PREPARANDO', '2021-08-23 23:51:18', 'EFECTIVO', 3),
+(60, 'NUEVO', '2021-08-23 23:54:46', 'EFECTIVO', 3),
+(61, 'NUEVO', '2021-08-23 23:55:55', 'EFECTIVO', 3),
+(62, 'NUEVO', '2021-08-23 23:56:26', 'EFECTIVO', 3),
+(63, 'NUEVO', '2021-08-23 23:57:02', 'EFECTIVO', 3),
+(64, 'NUEVO', '2021-08-23 23:59:25', 'EFECTIVO', 3),
+(65, 'NUEVO', '2021-08-24 00:00:05', 'EFECTIVO', 3),
+(66, 'NUEVO', '2021-08-24 00:01:22', 'EFECTIVO', 3),
+(67, 'NUEVO', '2021-08-24 00:03:00', 'EFECTIVO', 3),
+(68, 'PREPARANDO', '2021-08-24 00:05:16', 'EFECTIVO', 3),
+(69, 'PREPARANDO', '2021-08-24 12:33:19', 'EFECTIVO', 3),
+(73, 'NUEVO', '2021-08-25 18:45:57', 'EFECTIVO', 3),
+(74, 'NUEVO', '2021-08-25 18:46:13', 'TARJETA', 3),
+(75, 'NUEVO', '2021-08-25 19:26:07', 'EFECTIVO', 3);
 
 -- --------------------------------------------------------
 
@@ -83,8 +123,9 @@ CREATE TABLE `products` (
 
 INSERT INTO `products` (`ID_product`, `product_name`, `price`, `image`) VALUES
 (4, 'pizza', 550, ''),
-(8, 'LOMITO', 700, ''),
-(9, 'hamburguesa', 350, '');
+(8, 'hamburguesa', 750, ''),
+(9, 'hamburguesa', 350, ''),
+(12, 'LOMITO', 1100, '');
 
 -- --------------------------------------------------------
 
@@ -108,22 +149,24 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`ID_user`, `username`, `name & surname`, `email`, `telephone`, `address`, `password`, `role`) VALUES
-(2, 'ADMINISTRADOR', 'ADMINISTRADOR5', 'user1@hotmail.com', '21354548', 'san martin 452', '12345Us##', 'ADMIN'),
-(3, 'user1', 'user modificado5', 'user1@hotmail.com', '21354548', 'san martin 452', '12345Us#', 'USER'),
+(2, 'ADMINISTRADOR', 'ADMINISTRADOR1', 'user1@hotmail.com', '21354548', 'san martin 455', '12345Us##', 'ADMIN'),
+(3, 'user1', 'user modificado', 'user1@hotmail.com', '21354548', 'san martin 452', '12345Us#', 'USER'),
 (25, 'user2', 'user1', 'user1@hotmail.com', '21354548', 'san martin 452', '12345Us#', 'USER'),
 (26, 'user4', 'user1', 'user1@hotmail.com', '21354548', 'san martin 452', '12345Us#', 'USER'),
 (27, 'user5', 'user1', 'user1@hotmail.com', '21354548', 'san martin 452', '12345Us#', 'USER'),
 (28, 'user7', 'user1', 'user1@hotmail.com', '21354548', 'san martin 452', '12345Us#', 'USER'),
-(29, 'user8', 'user1', 'user1@hotmail.com', '21354548', 'san martin 452', '12345Us#', 'USER');
+(29, 'user8', 'user1', 'user1@hotmail.com', '21354548', 'san martin 452', '12345Us#', 'USER'),
+(30, 'user10', 'user1', 'user1@hotmail.com', '21354548', 'san martin 452', '12345Us#', 'USER'),
+(31, 'user11', 'user1', 'user1@hotmail.com', '21354548', 'san martin 452', '12345Us#', 'USER');
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `order`
+-- Indexes for table `detail`
 --
-ALTER TABLE `order`
+ALTER TABLE `detail`
   ADD PRIMARY KEY (`ID_order`),
   ADD KEY `orders_ID` (`orders_ID`),
   ADD KEY `product_ID` (`product_ID`);
@@ -152,39 +195,39 @@ ALTER TABLE `users`
 --
 
 --
--- AUTO_INCREMENT for table `order`
+-- AUTO_INCREMENT for table `detail`
 --
-ALTER TABLE `order`
-  MODIFY `ID_order` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+ALTER TABLE `detail`
+  MODIFY `ID_order` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `ID_orders` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
+  MODIFY `ID_orders` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
 
 --
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `ID_product` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `ID_product` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `ID_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `ID_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- Constraints for dumped tables
 --
 
 --
--- Constraints for table `order`
+-- Constraints for table `detail`
 --
-ALTER TABLE `order`
-  ADD CONSTRAINT `order_ibfk_1` FOREIGN KEY (`orders_ID`) REFERENCES `orders` (`ID_orders`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `order_ibfk_2` FOREIGN KEY (`product_ID`) REFERENCES `products` (`ID_product`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `detail`
+  ADD CONSTRAINT `detail_ibfk_1` FOREIGN KEY (`orders_ID`) REFERENCES `orders` (`ID_orders`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `detail_ibfk_2` FOREIGN KEY (`product_ID`) REFERENCES `products` (`ID_product`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `orders`

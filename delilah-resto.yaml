@@ -69,7 +69,7 @@ paths:
   /register:
     post:
       tags:
-      - "user"
+      - "register"
       summary: "creo un nuevo usuario para Delilah Resto"
       description: ""
       operationId: "nuevoPropietario"
@@ -96,7 +96,6 @@ paths:
         "410":
           description: "Contraseña debil"
 
-  /register/:IDuser:
     put:
       tags:
       - "register"
@@ -199,7 +198,7 @@ paths:
         "400":
           description: "Elemento Invalido"
           
-  /orders/:IDuser:
+  /orders:
     post:
       tags:
       - "orders"
@@ -222,7 +221,7 @@ paths:
       responses:
         "406":
           description: "Falta token"
-  /order/:IDuser/:IDOrder:
+  /order/:IDOrder:
     get:
       tags:
       - "order"
@@ -246,7 +245,7 @@ paths:
         "406":
           description: "Falta token"
   
-  /admin/:IDadmin:
+  /admin:
     put:
       tags:
       - "admin"
@@ -276,7 +275,7 @@ paths:
         "410":
           description: "Contraseña debil"
           
-  /ordersAdmin/:IDadmin:
+  /ordersAdmin:
     get:
       tags:
       - "ordersAdmin"
@@ -319,7 +318,7 @@ paths:
         description: "Objeto pedido de Delilah Resto"
         required: true
         schema:
-          $ref: "#/definitions/Admin"
+          $ref: "#/definitions/ordersAdmin"
       responses:
         "406":
           description: "Falta token"
@@ -330,7 +329,7 @@ paths:
         "415":
           description: "Estado de orden inexistente"
           
-  /orderAdmin/:IDadmin:
+  /orderAdmin:
     get:
       tags:
       - "orderAdmin"
@@ -349,14 +348,14 @@ paths:
         description: "Objeto detalles pedidos de Delilah Resto"
         required: true
         schema:
-          $ref: "#/definitions/ordersAdmin"
+          $ref: "#/definitions/Orders"
       responses:
         "406":
           description: "Falta token"
         "407":
           description: "Uduario no autorizado"
           
-  /productsAdmin/:IDadmin:
+  /productsAdmin:
     post:
       tags:
       - "productsAdmin"
@@ -382,7 +381,7 @@ paths:
         "407":
           description: "Uduario no autorizado"
           
-  /productsAdmin/:IDadmin/:IDproduct:
+  /productsAdmin/:IDproduct:
     put:
       tags:
       - "productsAdmin"
@@ -436,7 +435,7 @@ paths:
         "416":
           description: "Producto no existente"
           
-  /usersAdmin/:IDadmin:
+  /usersAdmin:
     get:
       tags:
       - "usersAdmin"
@@ -482,72 +481,72 @@ definitions:
     xml:
       name: "usuarios"
   Login:
-      type: object
+      type: "object"
       properties:
         username:
-          type: integer
-          format: int64
+          type: "integer"
+          format: "int64"
         email:
-          type: string
+          type: "string"
         password:
-          type: string
+          type: "string"
       xml:
-        name: login
+        name: "login"
   Orders: 
-      type: object
+      type: "object"
       properties:
         payment_type:
-          type: integer
-          format: int64
+          type: "integer"
+          format: "int64"
         order:
-          type: object
+          type: "object"
           properties:
             product_ID:
-              type: integer
-              format: int64
+              type: "integer"
+              format: "int64"
             amount:
-              type: integer
-              format: int64
+              type: "integer"
+              format: "int64"
       xml:
-        name: orders
+        name: "orders"
   Admin:
-      type: object
+      type: "object"
       properties:
         nameSurname:
-          type: integer
-          format: int64
+          type: "integer"
+          format: "int64"
         email:
-          type: string
+          type: "string"
         telephone:
-          type: string
+          type: "string"
         address:
-          type: string
+          type: "string"
         password:
-          type: string
+          type: "string"
       xml:
-        name: admin
+        name: "admin"
   ordersAdmin:
-      type: object
+      type: "object"
       properties:
         ID_orders:
-          type: integer
-          format: int64
+          type: "integer"
+          format: "int64"
         state:
-          type: string
+          type: "string"
       xml:
-        name: ordersAdmin
+        name: "ordersAdmin"
   productsAdmin:
-      type: object
+      type: "object"
       properties:
         product_name:
-          type: integer
-          format: int64
+          type: "integer"
+          format: "int64"
         price:
-          type: string
+          type: "string"
         image:
-          type: string
+          type: "string"
       xml:
-        name: admin
+        name: "admin"
 externalDocs:
   description: "Find out more about Swagger"
   url: "http://swagger.io"

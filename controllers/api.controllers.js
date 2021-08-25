@@ -1,7 +1,9 @@
 const sequelize = require('../database/connection.database.js');
 const jwt = require('jsonwebtoken');
 //---IMPORTAR CALLBACKS DE SQL.HELPERS
-const { insertUserSQL, verifyDataSQL, modifyUserDataSQL, getUserDataSql, selectProductsDataSql, insertOrdersDataSql, selectOrderDataSql, selectOrdersAdminDataSql, selectOrderAdminDataSql, updateOrdersAdminSql, insertProductDataSql, updateProductsDataSql, selectUsersDataSql, deleteProductDataSql } = require('../helpers/sql.helpers.js');
+const { insertUserSQL, verifyDataSQL, modifyUserDataSQL, getUserDataSql, selectProductsDataSql, insertOrdersDataSql, updateOrdersAdminSql, insertProductDataSql, updateProductsDataSql, selectUsersDataSql, deleteProductDataSql, deleteOrdersDataSql} = require('../helpers/sql.helpers.js');
+//------------------------------
+const { selectDetailSql, selectOrdersAdminSql, selectOrderAdminSql } = require('../helpers/join.helpers.js');
 
 //---CREAR USUARIO
 const postUser = async (req, res) => {
@@ -24,7 +26,8 @@ const postLogin = async (req, res) => {
         const confirmed = await verifyDataSQL(username, email, password)
         const signedObject = {
             id: confirmed[0].ID_user,
-            username: confirmed[0].username
+            username: confirmed[0].username,
+            role: confirmed[0].role
         }
         const token = jwt.sign(signedObject, process.env.SECRET);
         respuesta = {
@@ -40,9 +43,9 @@ const postLogin = async (req, res) => {
 //---MODIFICAR USUARIO
 const putRegister = async (req, res) => {
     try {
-        const { idUser } = req.params;
+        const { id } = req.user;
         const { nameSurname, email, telephone, address, password } = req.body;
-        const sqlHelpers = await modifyUserDataSQL(nameSurname, email, telephone, address, password, idUser)
+        const sqlHelpers = await modifyUserDataSQL(nameSurname, email, telephone, address, password, id)
         respuesta = {
             mensaje: 'usuario modificado',
             respuesta: { ...req.body, id: sqlHelpers[0] }
@@ -56,8 +59,8 @@ const putRegister = async (req, res) => {
 //---CONSEGUIR DATOS DE UN USUARIO
 const getRegister = async (req, res) => {
     try {
-        const { idUser } = req.params;
-        const sqlHelpers = await getUserDataSql(idUser);
+        const { id } = req.user;
+        const sqlHelpers = await getUserDataSql(id);
         respuesta = {
             mensaje: 'usuario seleccionado',
             respuesta: sqlHelpers
@@ -71,12 +74,11 @@ const getRegister = async (req, res) => {
 //---NUEVO PEDIDO
 const newOrders = async (req, res) => {
     try {
-        const { idUser } = req.params;
+        const { id } = req.user;
         const { payment_type, order } = req.body;
-        const sqlHelpers = await insertOrdersDataSql(payment_type, order, idUser);
+        const sqlHelpers = await insertOrdersDataSql(payment_type, order, id);
         respuesta = {
             mensaje: 'Nuevo pedido',
-            respuesta: sqlHelpers
         };
         res.status(200).send(respuesta);
     } catch (error) {
@@ -87,8 +89,9 @@ const newOrders = async (req, res) => {
 //---DETALLE DEL PEDIDO
 const getOrder = async (req, res) => {
     try {
-        const {idUser,idOrders } = req.params;//id del pedido
-        const sqlHelpers = await selectOrderDataSql(idOrders);
+        const {idOrders } = req.params;
+        const {id} = req.user;
+        const sqlHelpers = await selectDetailSql(idOrders);
         respuesta = {
             mensaje: 'Detalle del pedido',
             respuesta: sqlHelpers
@@ -116,9 +119,9 @@ const getProducts = async (req, res) => {
 //---MODIFICAR DATOS DEL ADMINISTRADOR
 const putAdmin = async (req, res) => {
     try {
-        const { idAdmin } = req.params;
+        const { id } = req.admin;
         const { nameSurname, email, telephone, address, password } = req.body;
-        const sqlHelpers = await modifyUserDataSQL(nameSurname, email, telephone, address, password, idAdmin)
+        const sqlHelpers = await modifyUserDataSQL(nameSurname, email, telephone, address, password, id)
         respuesta = {
             mensaje: 'Administrador modificado',
             respuesta: { ...req.body, id: sqlHelpers[0] }
@@ -132,7 +135,7 @@ const putAdmin = async (req, res) => {
 //---VER LISTADO DE PEDIDOS
 const getOrdersAdmin = async (req, res) => {
     try {
-        const sqlHelpers = await selectOrdersAdminDataSql();
+        const sqlHelpers = await selectOrdersAdminSql()
         respuesta = {
             mensaje: 'Listado de ordenes',
             respuesta: sqlHelpers
@@ -146,7 +149,7 @@ const getOrdersAdmin = async (req, res) => {
 //---VER DETALLES DE PEDIDOS
 const getOrderAdmin = async (req, res) => {
     try {
-        const sqlHelpers = await selectOrderAdminDataSql()
+        const sqlHelpers = await selectOrderAdminSql()
         respuesta = {
             mensaje: 'Listado de detalles de pedidos',
             respuesta: sqlHelpers
@@ -160,8 +163,9 @@ const getOrderAdmin = async (req, res) => {
 //---ADMIN- MODIFICAR ESTADO DE LOS PEDIDOS
 const putOrdersAdmin = async (req, res) => {
     try {
-        const { ID_orders, state } = req.body;
-        await updateOrdersAdminSql(state, ID_orders)
+        const {idOrders} = req.params;
+        const { state } = req.body;
+        await updateOrdersAdminSql(state, idOrders)
         respuesta = {
             mensaje: 'Pedido Modificado',
             respuesta: req.body
@@ -171,6 +175,20 @@ const putOrdersAdmin = async (req, res) => {
         res.status(500).send(error);
     }
 };
+
+//---ADMIN-ELIMINAR PEDIDO
+const deleteOrdersAdmin = async(req,res) => {
+    try {
+        const { idOrders } = req.params;
+        await deleteOrdersDataSql(idOrders);
+        respuesta = {
+            mensaje: 'Pedido Eliminado'
+        };
+        res.status(200).send(respuesta);
+    } catch (error) {
+        res.status(500).send(error);
+    }
+}
 
 //---ADMIN-CREAR NUEVO PRODUCTO
 const postProductsAdmin = async (req, res) => {
@@ -190,7 +208,7 @@ const postProductsAdmin = async (req, res) => {
 //---ADMIN-MODIFICAR ALGUN PRODUCTO
 const putProductsAdmin = async (req, res) => {
     try {
-        const {idAdmin,idProduct}=req.params;
+        const {idProduct}=req.params;
         const { ID_product, product_name, price, image } = req.body;
         await updateProductsDataSql(product_name, price, image, idProduct);
         respuesta = {
@@ -206,11 +224,10 @@ const putProductsAdmin = async (req, res) => {
 //---ADMIN-ELIMINAR PRODUCTO
 const deleteProductAdmin = async (req, res) => {
     try {
-        const { idAdmin, idProduct } = req.params;
+        const { idProduct } = req.params;
         await deleteProductDataSql(idProduct);
         respuesta = {
-            mensaje: 'Producto Eliminado',
-            respuesta: req.body
+            mensaje: 'Producto Eliminado'
         };
         res.status(200).send(respuesta);
     } catch (error) {
@@ -247,5 +264,6 @@ module.exports = {
     postProductsAdmin,
     putProductsAdmin,
     deleteProductAdmin,
-    getUsersAdmin
+    getUsersAdmin,
+    deleteOrdersAdmin
 }

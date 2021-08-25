@@ -1,4 +1,5 @@
 const sequelize = require('../database/connection.database.js');
+
 const insertUserSQL = async (objectBody) => {
     try {     
         const retorno = await sequelize.query('INSERT INTO `users` (`username`, `name & surname`, `email`, `telephone`, `address`, `password`) VALUES (:username, :nameSurname, :email, :telephone, :address, :password)',
@@ -71,7 +72,7 @@ const selectProductsDataSql = async () => {
 
 const selectOrderDataSql = async (idParams) => {
     try {
-        const retorno = await sequelize.query('SELECT * FROM `order`, `products`, `orders` WHERE orders.ID_orders=? ',
+        const retorno = await sequelize.query('SELECT * FROM `detail`, `products`, `orders` WHERE orders.ID_orders=? ',
             { replacements: [idParams], type: sequelize.QueryTypes.SELECT })
         return retorno;
     } catch (error) {
@@ -83,11 +84,12 @@ const insertOrdersDataSql = async (paymentType, order, IDuser) => {
     try { 
         const objectID = await sequelize.query('INSERT INTO `orders` SET payment_type = ? , user_ID = ?',
             { replacements: [paymentType, IDuser], type: sequelize.QueryTypes.INSERT })
-        const orderID = objectID[0];
-        for (let index = 0; index < order.length; index++) {
-            await sequelize.query('INSERT INTO `order` SET orders_ID = ?, product_ID = ? , amount = ? ',
-                { replacements: [orderID, order[index].product_ID, order[index].amount], type: sequelize.QueryTypes.INSERT })
-        }
+            const orderID = objectID[0];
+            
+            order.forEach(async(el,index)  => {
+                await sequelize.query('INSERT INTO `detail` SET orders_ID = ?, product_ID = ? , amount = ? ',
+                { replacements: [orderID , order[index].product_ID , order[index].amount ], type: sequelize.QueryTypes.INSERT })
+            })
         const detailOrder = {
             orderID,
             ...order
@@ -110,7 +112,7 @@ const selectOrdersAdminDataSql = async () => {
 
 const selectOrderAdminDataSql = async () => {
     try {
-        const retorno = await sequelize.query('SELECT * FROM `order`',
+        const retorno = await sequelize.query('SELECT * FROM `detail`',
             { type: sequelize.QueryTypes.SELECT });
         console.log(retorno)
         return retorno;
@@ -177,10 +179,20 @@ const deleteProductDataSql = async(idProductParams) =>{
     } catch (error) {
         res.status(500).send(error);
     }
+};
+
+const deleteOrdersDataSql = async(idOrdersParams) =>{
+    try {     
+        const retorno = await sequelize.query('DELETE FROM `orders` WHERE `ID_orders` = ?',
+        {replacements:[idOrdersParams], type:sequelize.QueryTypes.DELETE});
+        return retorno;
+    } catch (error) {
+        res.status(500).send(error);
+    }
 }
 
 const selectUsersDataSql = async () => {
-    const retorno = await sequelize.query('SELECT * FROM `users`',
+    const retorno = await sequelize.query('SELECT `ID_user`, `username`, `name & surname`, `email`, `telephone`, `address`, `role` FROM `users`',
         { type: sequelize.QueryTypes.SELECT });
     return retorno;
 };
@@ -203,5 +215,6 @@ module.exports = {
     updateProductsDataSql,
     existingProductDataSql,
     deleteProductDataSql,
-    selectUsersDataSql
+    selectUsersDataSql,
+    deleteOrdersDataSql
 }
