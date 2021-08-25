@@ -58,7 +58,7 @@ O desde `nodemon app.js` si es que lo tiene instalado de manera global en su dis
 ### 5 - Listo para empezar!
 Testear los endpoints provistos desde el archivo `request.rest` colocada en el indice de la carpeta clonada.
 
-
+[Colección de Postman](https://www.getpostman.com/collections/6fea861f37cc3f8dd494)
 
 
  -*-*-*-*-*-*-*--*-*-*

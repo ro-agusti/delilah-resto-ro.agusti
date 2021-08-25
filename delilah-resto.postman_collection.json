@@ -1,0 +1,536 @@
+{
+	"info": {
+		"_postman_id": "c7e06aa5-e739-43e4-8112-4a5b93d116a8",
+		"name": "delilah-resto",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"user10\",\r\n    \"nameSurname\": \"user1\",\r\n    \"email\": \"user1@hotmail.com\",\r\n    \"telephone\": \"21354548\",\r\n    \"address\": \"san martin 452\",\r\n    \"password\": \"12345Us#\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"user1\",\r\n    \"email\": \"user1@hotmail.com\",\r\n    \"password\": \"12345Us#\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "register",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywidXNlcm5hbWUiOiJ1c2VyMSIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNjI5ODExODI1fQ.PAhQcLynji7VZDmuwzTyCrc02JK-As03BK2R-cPY4Hk",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nameSurname\": \"user modificado10\",\r\n    \"email\": \"user1@hotmail.com\",\r\n    \"telephone\": \"21354548\",\r\n    \"address\": \"san martin 452\",\r\n    \"password\": \"12345Us#\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "register",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywidXNlcm5hbWUiOiJ1c2VyMSIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNjI5ODExODI1fQ.PAhQcLynji7VZDmuwzTyCrc02JK-As03BK2R-cPY4Hk",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "products",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "orders",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywidXNlcm5hbWUiOiJ1c2VyMSIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNjI5ODExODI1fQ.PAhQcLynji7VZDmuwzTyCrc02JK-As03BK2R-cPY4Hk",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"payment_type\": \"EFECTIVO\",\r\n    \"order\":[\r\n        {\r\n         \"product_ID\": 8,\r\n         \"amount\": 1  \r\n        },\r\n        {\r\n         \"product_ID\": 4,\r\n         \"amount\": 2  \r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/orders",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"orders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "order",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywidXNlcm5hbWUiOiJ1c2VyMSIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNjI5ODExODI1fQ.PAhQcLynji7VZDmuwzTyCrc02JK-As03BK2R-cPY4Hk",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/order/69",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"order",
+						"69"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "admin",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwidXNlcm5hbWUiOiJBRE1JTklTVFJBRE9SIiwicm9sZSI6IkFETUlOIiwiaWF0IjoxNjI5NzU5NTg0fQ.RKg3q-Zkzyhcz7LcIazZXYGhJJtgRoh4pMtURyeLjhg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nameSurname\": \"ADMINISTRADOR\",\r\n    \"email\": \"user1@hotmail.com\",\r\n    \"telephone\": \"21354548\",\r\n    \"address\": \"san martin 455\",\r\n    \"password\": \"12345Us##\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/admin",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"admin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ordersAdmin",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwidXNlcm5hbWUiOiJBRE1JTklTVFJBRE9SIiwicm9sZSI6IkFETUlOIiwiaWF0IjoxNjI5NzU5NTg0fQ.RKg3q-Zkzyhcz7LcIazZXYGhJJtgRoh4pMtURyeLjhg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/ordersAdmin",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"ordersAdmin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "orderAdmin",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwidXNlcm5hbWUiOiJBRE1JTklTVFJBRE9SIiwicm9sZSI6IkFETUlOIiwiaWF0IjoxNjI5NzU5NTg0fQ.RKg3q-Zkzyhcz7LcIazZXYGhJJtgRoh4pMtURyeLjhg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/orderAdmin",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"orderAdmin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ordersAdmin",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwidXNlcm5hbWUiOiJBRE1JTklTVFJBRE9SIiwicm9sZSI6IkFETUlOIiwiaWF0IjoxNjI5NzU5NTg0fQ.RKg3q-Zkzyhcz7LcIazZXYGhJJtgRoh4pMtURyeLjhg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"state\": \"PREPARANDO\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/ordersAdmin/68",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"ordersAdmin",
+						"68"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "productsAdmin",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwidXNlcm5hbWUiOiJBRE1JTklTVFJBRE9SIiwicm9sZSI6IkFETUlOIiwiaWF0IjoxNjI5NzU5NTg0fQ.RKg3q-Zkzyhcz7LcIazZXYGhJJtgRoh4pMtURyeLjhg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"product_name\": \"LOMITO\",\r\n    \"price\": 1000,\r\n    \"image\":\"\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/productsAdmin",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"productsAdmin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "productsAdmin",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwidXNlcm5hbWUiOiJBRE1JTklTVFJBRE9SIiwicm9sZSI6IkFETUlOIiwiaWF0IjoxNjI5NzU5NTg0fQ.RKg3q-Zkzyhcz7LcIazZXYGhJJtgRoh4pMtURyeLjhg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"product_name\": \"hamburguesa\",\r\n    \"price\": 750,\r\n    \"image\":\"\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/productsAdmin/8",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"productsAdmin",
+						"8"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "productsAdmin",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwidXNlcm5hbWUiOiJBRE1JTklTVFJBRE9SIiwicm9sZSI6IkFETUlOIiwiaWF0IjoxNjI5NzU5NTg0fQ.RKg3q-Zkzyhcz7LcIazZXYGhJJtgRoh4pMtURyeLjhg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/productsAdmin/10",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"productsAdmin",
+						"10"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "usersAdmin",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwidXNlcm5hbWUiOiJBRE1JTklTVFJBRE9SIiwicm9sZSI6IkFETUlOIiwiaWF0IjoxNjI5NzU5NTg0fQ.RKg3q-Zkzyhcz7LcIazZXYGhJJtgRoh4pMtURyeLjhg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/usersAdmin",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"usersAdmin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ordersAdmin",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwidXNlcm5hbWUiOiJBRE1JTklTVFJBRE9SIiwicm9sZSI6IkFETUlOIiwiaWF0IjoxNjI5NzU5NTg0fQ.RKg3q-Zkzyhcz7LcIazZXYGhJJtgRoh4pMtURyeLjhg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/ordersAdmin/70",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"ordersAdmin",
+						"70"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
